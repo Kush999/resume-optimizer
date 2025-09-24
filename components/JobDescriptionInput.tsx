@@ -23,7 +23,7 @@ export default function JobDescriptionInput({
           Job Description
         </CardTitle>
         <CardDescription>
-          Paste the job description for the position you're applying for
+          Paste the job description for the position you&apos;re applying for
         </CardDescription>
       </CardHeader>
       <CardContent>
