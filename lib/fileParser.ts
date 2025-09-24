@@ -2,14 +2,19 @@ export interface ParseResult {
   text: string
   success: boolean
   error?: string
+  jobDescription?: string
 }
 
-export async function parseFile(file: File): Promise<ParseResult> {
+export async function parseFile(file: File, jobDescription?: string): Promise<ParseResult> {
   try {
     const formData = new FormData()
     formData.append('file', file)
+    if (jobDescription) {
+      formData.append('jobDescription', jobDescription)
+    }
 
     console.log('Sending file to API:', file.name, file.type, file.size)
+    console.log('Job description length:', jobDescription?.length || 0)
 
     const response = await fetch('/api/parse-resume', {
       method: 'POST',
@@ -44,7 +49,8 @@ export async function parseFile(file: File): Promise<ParseResult> {
     return {
       text: result.text || '',
       success: result.success,
-      error: result.error
+      error: result.error,
+      jobDescription: result.jobDescription
     }
   } catch (error) {
     console.error('Parse error:', error)

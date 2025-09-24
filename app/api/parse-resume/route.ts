@@ -9,8 +9,10 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
     const file = formData.get('file') as File
+    const jobDescription = formData.get('jobDescription') as string
 
     console.log('File received:', file?.name, file?.type, file?.size)
+    console.log('Job description received:', jobDescription?.length || 0, 'characters')
 
     if (!file) {
       console.log('No file provided')
@@ -65,7 +67,8 @@ export async function POST(request: NextRequest) {
               
               resolve(NextResponse.json({
                 success: true,
-                text: extractedText.trim()
+                text: extractedText.trim(),
+                jobDescription: jobDescription || ''
               }))
             } catch (parseError) {
               console.error('PDF data parsing error:', parseError)
@@ -99,7 +102,8 @@ export async function POST(request: NextRequest) {
         
         return NextResponse.json({
           success: true,
-          text: result.value
+          text: result.value,
+          jobDescription: jobDescription || ''
         })
       } catch (docxError) {
         console.error('DOCX parsing error:', docxError)
