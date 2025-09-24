@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
         const PDFParser = (await import('pdf2json')).default
         const pdfParser = new PDFParser()
         
-        return new Promise((resolve) => {
+        return new Promise<NextResponse>((resolve) => {
           pdfParser.on('pdfParser_dataError', (errData: any) => {
             console.error('PDF parsing error:', errData.parserError)
             resolve(NextResponse.json({
@@ -92,9 +92,10 @@ export async function POST(request: NextRequest) {
         fileName.endsWith('.docx')) {
       try {
         const arrayBuffer = await file.arrayBuffer()
+        const buffer = Buffer.from(arrayBuffer)
         const mammoth = (await import('mammoth')).default
         
-        const result = await mammoth.extractRawText({ buffer: arrayBuffer })
+        const result = await mammoth.extractRawText({ buffer })
         
         return NextResponse.json({
           success: true,

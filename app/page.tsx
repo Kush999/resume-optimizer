@@ -121,7 +121,7 @@ export default function Home() {
                     <div className="text-2xl mb-2">🔍</div>
                     <h3 className="font-semibold mb-1">Text Extraction</h3>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      We'll extract all text content from your resume
+                      We&apos;ll extract all text content from your resume
                     </p>
                   </div>
                   <div className="p-4">
